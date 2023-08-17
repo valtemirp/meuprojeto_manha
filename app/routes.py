@@ -1,7 +1,8 @@
 from app import app , db
-from flask import render_template, url_for, request, flash 
+from flask import render_template, url_for, request, flash, session, redirect
 from app.forms import Contato, Cadastro
 from app.models import ContatoModel, CadastroModel
+import time
 
 
 @app.route('/')
@@ -51,7 +52,19 @@ def cadastro():
 
     return render_template('cadastro.html', tituto = 'Cadastro',cadastro = cadastro)
 
-@app.route('/login')
+@app.route('/login', methods=['POST','GET'])
 def login():
+    if request.method == 'POST':
+        email = request.form.get('email').lower()
+        senha = request.form.get('senha') #12345
+
+        usuario = CadastroModel.query.filter_by(email = email, senha = senha).first()
+        if usuario and usuario.senha == senha:
+            session['email'] = usuario.id
+            time.sleep(2)
+            return redirect(url_for('index'))
+        else:
+            flash('E-mail ou senha invalido!')
+
     return render_template('login.html', tituto = 'Login')
 

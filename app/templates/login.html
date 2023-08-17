@@ -2,6 +2,15 @@
 
 {% block conteudo %}
 <section class="main-content">
+  {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for mensagem in messages %}
+            <div class="alert alert-success" role="alert">
+                {{ mensagem }}
+            </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
   <h2 class="mb-4">Login</h2>
   <form action="" method="post" class="needs-validation" novalidate>
     <div class="form-group">
