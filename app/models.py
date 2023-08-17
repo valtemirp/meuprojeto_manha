@@ -14,8 +14,7 @@ class CadastroModel(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     nome = db.Column(db.String(40), nullable = False)
     sobrenome = db.Column(db.String(40), nullable = False)
-    email = db.Column(db.String(60), nullable = False, unique = True )
-    telefone = db.Column(db.String(14), nullable = False)
+    email = db.Column(db.String(60), nullable = False)
     senha = db.Column(db.String(10), nullable = False)
 
     def __repr__(self):

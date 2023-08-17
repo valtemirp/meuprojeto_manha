@@ -10,11 +10,10 @@ def index():
 
 @app.route('/contatos', methods=['POST', 'GET'])
 def contatos():
-    
     formulario = Contato()
     print('Acessou a rota contatos!')
     if formulario.validate_on_submit():
-        flash('Seu cadastro foi enviado com sucesso!')
+        flash('Seu formulario foi enviado com sucesso!')
         nome = formulario.nome.data
         email = formulario.email.data
         telefone = formulario.telefone.data
@@ -39,17 +38,17 @@ def blog():
 @app.route('/cadastro', methods=['POST', 'GET'])
 def cadastro():
     cadastro = Cadastro()
+    print('Acessou a rota de cadastro!')
     if cadastro.validate_on_submit():
         flash('Seu cadastro foi realizado com sucesso!')
         nome = cadastro.nome.data
-        sobrenome = cadastro.nome.data
+        sobrenome = cadastro.sobrenome.data
         email = cadastro.email.data
-        telefone = cadastro.telefone.data
         senha = cadastro.senha.data
-
-        novo_cadastro = CadastroModel(nome = nome, sobrenome = sobrenome, email=email, telefone=telefone, senha=senha)
+        novo_cadastro = CadastroModel(nome = nome, sobrenome=sobrenome, email=email, senha=senha)
         db.session.add(novo_cadastro)
-        db.session.commit()
+        db.session.commit() 
+
     return render_template('cadastro.html', tituto = 'Cadastro',cadastro = cadastro)
 
 @app.route('/login')
