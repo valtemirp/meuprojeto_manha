@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+<section class="main-content">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for mensagem in messages %}
+            <div class="alert alert-success" role="alert">
+                {{ mensagem }}
+            </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+  <h2 class="mb-4">Editar</h2>
+  <form action="" method="post">
+    <div class="form-row">
+      <div class="col-md-6 mb-3">
+        <label for="nome">Nome</label>
+        <input value="{{ session['nome'] }}" type="text" class="form-control" name="nome">
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="sobrenome">Sobrenome</label>
+        <input value="{{ session['sobrenome'] }}" type="text" class="form-control" name="sobrenome">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-6 mb-3">
+        <label for="email">Email</label>
+        <input value="{{ session['email'] }}" type="email" class="form-control" id="email" name="email" >
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="senha">Senha</label>
+        <input type="password" class="form-control" id="senha" name="senha">
+      </div>
+    </div>
+    <div class="form-row">
+    
+    </div>
+    <button type="submit" class="btn btn-primary">Salvar</button>
+  </form>
+</section>
+{% endblock %}

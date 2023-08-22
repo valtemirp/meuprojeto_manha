@@ -58,12 +58,13 @@ def cadastro():
 def login():
     if request.method == 'POST':
         email = request.form.get('email').lower()
-        senha = request.form.get('senha') 
+        senha = request.form.get('senha')
         usuario = CadastroModel.query.filter_by(email = email).first()
         if usuario and check_password_hash(usuario.senha, senha):
             session['email'] = usuario.email
             session['nome'] = usuario.nome
-            time.sleep(2)
+            session['sobrenome'] = usuario.sobrenome
+            time.sleep(1)
             return redirect(url_for('index'))
         else:
             flash('E-mail ou senha invalido!')
@@ -74,5 +75,27 @@ def login():
 def sair():
     session['email'] = None
     session['nome'] = None
+    session['sobrenome'] = None
+    session['senha'] = None
     return redirect(url_for('login'))
 
+@app.route('/editar', methods=['POST','GET'])
+def editar():
+    if 'email' not in session:
+        return redirect(url_for('login'))
+    
+    usuario = CadastroModel.query.filter_by(email = session['email']).first()
+    if request.method == 'POST':
+        usuario.nome = request.form.get('nome')
+        usuario.sobrenome = request.form.get('sobrenome')
+        usuario.email = request.form.get('email')
+        senha = request.form.get('senha')
+        usuario.senha = bcrypt.generate_password_hash(senha).decode('utf-8')
+        db.session.commit()
+        session['email'] = usuario.email
+        session['nome'] = usuario.nome
+        session['sobrenome']  = usuario.sobrenome
+        session['senha'] = usuario.senha
+        flash('Seus dados foram atualizados com sucesso!')
+
+    return render_template('editar.html', titulo  = 'Editar')
