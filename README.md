@@ -57,5 +57,5 @@ Isso criará uma pasta chamada migrations onde as migrações serão armazenadas
 
 Sempre que você fizer alterações em seus modelos e quiser aplicar as migrações pendentes ao banco de dados.
 
-    bash flask db upgrade
+    flask db upgrade
 
